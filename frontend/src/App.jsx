@@ -18,8 +18,10 @@ import JobListPage from './pages/jobs/JobListPage';
 import JobDetailsPage from './pages/jobs/JobDetailsPage';
 import CandidateListPage from './pages/candidates/CandidateListPage';
 import CandidateDetailsPage from './pages/candidates/CandidateDetailsPage';
+import ApplicationPipelinePage from './pages/applications/ApplicationPipelinePage';
+import ApplicationDetailsPage from './pages/applications/ApplicationDetailsPage';
 import ModulePlaceholder from './pages/common/ModulePlaceholder';
-import { FileCheck2, Sparkles, HelpCircle, BarChart3, Settings } from 'lucide-react';
+import { Sparkles, HelpCircle, BarChart3, Settings } from 'lucide-react';
 
 export default function App() {
   return (
@@ -59,17 +61,9 @@ export default function App() {
             {/* Candidate Management Routes */}
             <Route path="/candidates" element={<CandidateListPage />} />
             <Route path="/candidates/:id" element={<CandidateDetailsPage />} />
-            <Route
-              path="/applications"
-              element={
-                <ModulePlaceholder
-                  title="Application Pipeline"
-                  description="Multi-stage candidate application tracking with status history and notes."
-                  phase="Phase 6"
-                  icon={FileCheck2}
-                />
-              }
-            />
+            {/* Application Pipeline Routes */}
+            <Route path="/applications" element={<ApplicationPipelinePage />} />
+            <Route path="/applications/:id" element={<ApplicationDetailsPage />} />
             <Route
               path="/analysis"
               element={
