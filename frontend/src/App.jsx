@@ -14,8 +14,10 @@ import UnauthorizedPage from './pages/auth/UnauthorizedPage';
 
 // Dashboard & Placeholder Pages
 import DashboardPage from './pages/dashboard/DashboardPage';
+import JobListPage from './pages/jobs/JobListPage';
+import JobDetailsPage from './pages/jobs/JobDetailsPage';
 import ModulePlaceholder from './pages/common/ModulePlaceholder';
-import { Briefcase, Users, FileCheck2, Sparkles, HelpCircle, BarChart3, Settings } from 'lucide-react';
+import { Users, FileCheck2, Sparkles, HelpCircle, BarChart3, Settings } from 'lucide-react';
 
 export default function App() {
   return (
@@ -49,18 +51,9 @@ export default function App() {
               }
             />
 
-            {/* Module Placeholders mapped to upcoming phases */}
-            <Route
-              path="/jobs"
-              element={
-                <ModulePlaceholder
-                  title="Job Management"
-                  description="Create, edit, search, and track job opening requirements and experience criteria."
-                  phase="Phase 4"
-                  icon={Briefcase}
-                />
-              }
-            />
+            {/* Job Management Routes */}
+            <Route path="/jobs" element={<JobListPage />} />
+            <Route path="/jobs/:id" element={<JobDetailsPage />} />
             <Route
               path="/candidates"
               element={
