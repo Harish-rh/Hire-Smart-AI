@@ -33,7 +33,17 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+
+    # Modular HireSmart AI Apps
+    'accounts',
+    'jobs',
+    'candidates',
+    'applications',
+    'ai_assistant',
+    'reports',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # CORS at top
