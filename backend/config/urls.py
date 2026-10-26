@@ -1,0 +1,22 @@
+"""
+URL configuration for HireSmart AI project.
+"""
+
+from django.contrib import admin
+from django.urls import path
+from django.http import JsonResponse
+from django.conf import settings
+
+def health_check(request):
+    """Simple API health check endpoint."""
+    return JsonResponse({
+        'status': 'healthy',
+        'app': 'HireSmart AI API',
+        'debug': settings.DEBUG,
+        'database_engine': settings.DATABASES['default']['ENGINE'].split('.')[-1],
+    })
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/health/', health_check, name='api_health_check'),
+]
