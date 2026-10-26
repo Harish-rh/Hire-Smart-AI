@@ -21,4 +21,5 @@ urlpatterns = [
     path('api/health/', health_check, name='api_health_check'),
     path('api/auth/', include('accounts.urls')),
     path('api/jobs/', include('jobs.urls')),
+    path('api/candidates/', include('candidates.urls')),
 ]

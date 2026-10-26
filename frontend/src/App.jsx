@@ -16,8 +16,10 @@ import UnauthorizedPage from './pages/auth/UnauthorizedPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import JobListPage from './pages/jobs/JobListPage';
 import JobDetailsPage from './pages/jobs/JobDetailsPage';
+import CandidateListPage from './pages/candidates/CandidateListPage';
+import CandidateDetailsPage from './pages/candidates/CandidateDetailsPage';
 import ModulePlaceholder from './pages/common/ModulePlaceholder';
-import { Users, FileCheck2, Sparkles, HelpCircle, BarChart3, Settings } from 'lucide-react';
+import { FileCheck2, Sparkles, HelpCircle, BarChart3, Settings } from 'lucide-react';
 
 export default function App() {
   return (
@@ -54,17 +56,9 @@ export default function App() {
             {/* Job Management Routes */}
             <Route path="/jobs" element={<JobListPage />} />
             <Route path="/jobs/:id" element={<JobDetailsPage />} />
-            <Route
-              path="/candidates"
-              element={
-                <ModulePlaceholder
-                  title="Candidate Management"
-                  description="Upload PDF/DOCX resumes, extract technical qualifications, and maintain candidate profiles."
-                  phase="Phase 5"
-                  icon={Users}
-                />
-              }
-            />
+            {/* Candidate Management Routes */}
+            <Route path="/candidates" element={<CandidateListPage />} />
+            <Route path="/candidates/:id" element={<CandidateDetailsPage />} />
             <Route
               path="/applications"
               element={
