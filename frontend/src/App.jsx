@@ -22,8 +22,10 @@ import ApplicationPipelinePage from './pages/applications/ApplicationPipelinePag
 import ApplicationDetailsPage from './pages/applications/ApplicationDetailsPage';
 import AnalysisListPage from './pages/analysis/AnalysisListPage';
 import AnalysisDetailsPage from './pages/analysis/AnalysisDetailsPage';
+import InterviewAssistantPage from './pages/interviews/InterviewAssistantPage';
+import QuestionSetDetailsPage from './pages/interviews/QuestionSetDetailsPage';
 import ModulePlaceholder from './pages/common/ModulePlaceholder';
-import { HelpCircle, BarChart3, Settings } from 'lucide-react';
+import { BarChart3, Settings } from 'lucide-react';
 
 export default function App() {
   return (
@@ -69,17 +71,9 @@ export default function App() {
             {/* AI Resume Analysis Routes */}
             <Route path="/analysis" element={<AnalysisListPage />} />
             <Route path="/analysis/:id" element={<AnalysisDetailsPage />} />
-            <Route
-              path="/interviews"
-              element={
-                <ModulePlaceholder
-                  title="Interview Assistant"
-                  description="Generate and manage tailored technical interview questions with evaluation criteria."
-                  phase="Phase 9"
-                  icon={HelpCircle}
-                />
-              }
-            />
+            {/* Interview Assistant Routes */}
+            <Route path="/interviews" element={<InterviewAssistantPage />} />
+            <Route path="/interviews/:id" element={<QuestionSetDetailsPage />} />
             <Route
               path="/reports"
               element={

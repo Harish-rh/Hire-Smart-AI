@@ -171,3 +171,82 @@ Experienced in automated CI/CD and unit testing.""",
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['status'], 'COMPLETED')
         self.assertIn('Python', response.data['skills_found'])
+
+    def test_generate_interview_questions_fallback(self):
+        url = reverse('generate_interviews')
+        payload = {
+            'job': self.job.id,
+            'candidate': self.candidate.id,
+            'topic': 'Python',
+            'difficulty': 'INTERMEDIATE',
+            'count': 2,
+        }
+        response = self.client.post(url, payload, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['topic'], 'Python')
+        self.assertEqual(response.data['difficulty'], 'INTERMEDIATE')
+        self.assertFalse(response.data['is_ai_generated'])  # Verified rule-based bank
+        self.assertEqual(len(response.data['questions']), 2)
+        first_q = response.data['questions'][0]
+        self.assertIn('question', first_q)
+        self.assertIn('evaluation_points', first_q)
+        self.assertIn('suggested_answer', first_q)
+
+    @patch('requests.post')
+    @patch('requests.get')
+    def test_generate_interview_questions_mocked_ollama(self, mock_get, mock_post):
+        mock_get_resp = MagicMock()
+        mock_get_resp.status_code = 200
+        mock_get_resp.json.return_value = {'models': [{'name': 'llama3.2:1b'}]}
+        mock_get.return_value = mock_get_resp
+
+        mock_post_resp = MagicMock()
+        mock_post_resp.status_code = 200
+        mock_post_resp.json.return_value = {
+            'response': json.dumps({
+                'questions': [
+                    {
+                        'question': 'How does React Virtual DOM diffing algorithm function in O(n) time?',
+                        'topic': 'React.js',
+                        'difficulty': 'Advanced',
+                        'evaluation_points': ['Heuristic assumption', 'Component keys', 'Tree reconciliation'],
+                        'suggested_answer': 'React makes two assumptions: elements of different types produce different trees, and keys identify stable child elements.'
+                    }
+                ]
+            })
+        }
+        mock_post.return_value = mock_post_resp
+
+        url = reverse('generate_interviews')
+        payload = {
+            'job': self.job.id,
+            'topic': 'React.js',
+            'difficulty': 'ADVANCED',
+            'count': 1,
+        }
+        response = self.client.post(url, payload, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(response.data['is_ai_generated'])
+        self.assertEqual(len(response.data['questions']), 1)
+
+    def test_update_and_delete_interview_question_set(self):
+        url_gen = reverse('generate_interviews')
+        gen_res = self.client.post(url_gen, {
+            'job': self.job.id,
+            'topic': 'PostgreSQL',
+            'difficulty': 'BEGINNER',
+            'count': 1,
+        }, format='json')
+        q_id = gen_res.data['id']
+
+        # Update
+        url_detail = reverse('interview-questions-detail', kwargs={'pk': q_id})
+        patch_res = self.client.patch(url_detail, {'topic': 'PostgreSQL Performance'}, format='json')
+        self.assertEqual(patch_res.status_code, status.HTTP_200_OK)
+        self.assertEqual(patch_res.data['topic'], 'PostgreSQL Performance')
+
+        # Delete
+        del_res = self.client.delete(url_detail)
+        self.assertEqual(del_res.status_code, status.HTTP_204_NO_CONTENT)
