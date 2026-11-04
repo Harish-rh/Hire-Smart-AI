@@ -20,8 +20,10 @@ import CandidateListPage from './pages/candidates/CandidateListPage';
 import CandidateDetailsPage from './pages/candidates/CandidateDetailsPage';
 import ApplicationPipelinePage from './pages/applications/ApplicationPipelinePage';
 import ApplicationDetailsPage from './pages/applications/ApplicationDetailsPage';
+import AnalysisListPage from './pages/analysis/AnalysisListPage';
+import AnalysisDetailsPage from './pages/analysis/AnalysisDetailsPage';
 import ModulePlaceholder from './pages/common/ModulePlaceholder';
-import { Sparkles, HelpCircle, BarChart3, Settings } from 'lucide-react';
+import { HelpCircle, BarChart3, Settings } from 'lucide-react';
 
 export default function App() {
   return (
@@ -64,17 +66,9 @@ export default function App() {
             {/* Application Pipeline Routes */}
             <Route path="/applications" element={<ApplicationPipelinePage />} />
             <Route path="/applications/:id" element={<ApplicationDetailsPage />} />
-            <Route
-              path="/analysis"
-              element={
-                <ModulePlaceholder
-                  title="AI Resume Analysis"
-                  description="Screen resumes against job requirements using local LLM inference with structured evidence validation."
-                  phase="Phase 7 & 8"
-                  icon={Sparkles}
-                />
-              }
-            />
+            {/* AI Resume Analysis Routes */}
+            <Route path="/analysis" element={<AnalysisListPage />} />
+            <Route path="/analysis/:id" element={<AnalysisDetailsPage />} />
             <Route
               path="/interviews"
               element={
