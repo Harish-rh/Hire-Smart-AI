@@ -24,8 +24,9 @@ import AnalysisListPage from './pages/analysis/AnalysisListPage';
 import AnalysisDetailsPage from './pages/analysis/AnalysisDetailsPage';
 import InterviewAssistantPage from './pages/interviews/InterviewAssistantPage';
 import QuestionSetDetailsPage from './pages/interviews/QuestionSetDetailsPage';
+import ReportsPage from './pages/reports/ReportsPage';
 import ModulePlaceholder from './pages/common/ModulePlaceholder';
-import { BarChart3, Settings } from 'lucide-react';
+import { Settings } from 'lucide-react';
 
 export default function App() {
   return (
@@ -74,17 +75,8 @@ export default function App() {
             {/* Interview Assistant Routes */}
             <Route path="/interviews" element={<InterviewAssistantPage />} />
             <Route path="/interviews/:id" element={<QuestionSetDetailsPage />} />
-            <Route
-              path="/reports"
-              element={
-                <ModulePlaceholder
-                  title="Reports & Analytics"
-                  description="Recruitment metrics, candidate conversion pipelines, and audit activity logs."
-                  phase="Phase 10"
-                  icon={BarChart3}
-                />
-              }
-            />
+            {/* Reports & Analytics Route */}
+            <Route path="/reports" element={<ReportsPage />} />
 
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
           </Route>
